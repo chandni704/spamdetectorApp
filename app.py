@@ -15,43 +15,33 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for dark theme styling
+# Custom CSS for styling
 st.markdown("""
     <style>
-    body {
-        background-color: #121212;
-        color: #FFFFFF;
-    }
     .main {
-        background-color: #1e1e1e;
-        padding: 30px;
+        background-color: #f8f9fa;
+        padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 0 20px rgba(255,255,255,0.05);
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     .stTextArea > label {
         font-size: 18px;
-        color: #ffffff;
     }
     .stButton button {
-        background-color: #00adb5;
-        color: #ffffff;
+        background-color: #6f42c1;
+        color: white;
         font-weight: bold;
-        padding: 10px 24px;
-        border: none;
-        border-radius: 8px;
-        margin-top: 12px;
-        transition: background-color 0.3s ease;
-    }
-    .stButton button:hover {
-        background-color: #00ced1;
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin-top: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Main app container
+# Main title
 st.markdown("<div class='main'>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center; color: #ffffff;'>📩 SMS Spam Detection App</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #bbbbbb;'>🔍 Enter your SMS message below to find out if it's <strong>SPAM</strong> or <strong>HAM</strong>.</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>📩 SMS Spam Detection App</h1>", unsafe_allow_html=True)
+st.write("🔍 Enter an SMS message below and find out whether it's **spam** or **ham**!")
 
 # Input area
 msg = st.text_area("✉️ Your message:")
@@ -63,9 +53,8 @@ if st.button("🔎 Classify Message"):
     else:
         vec = vectorizer.transform([msg])
         pred = model.predict(vec)[0]
-        if pred == 1:
-            st.markdown("<h3 style='color: #ff4c4c; text-align: center;'>🚫 This is SPAM!</h3>", unsafe_allow_html=True)
-        else:
-            st.markdown("<h3 style='color: #00ff99; text-align: center;'>✅ This is HAM (safe)</h3>", unsafe_allow_html=True)
+        result = "🚫 This is *SPAM!*" if pred == 1 else "✅ This is *HAM* (safe)"
+        color = "red" if pred == 1 else "green"
+        st.markdown(f"<h3 style='color:{color}; text-align:center;'>{result}</h3>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
