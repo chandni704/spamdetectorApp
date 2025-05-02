@@ -4,7 +4,7 @@ import streamlit as st
 import joblib
 
 # Load model and vectorizer
-model = joblib.load('spam_model.pkl')
+model = joblib.load('model.pkl')
 vectorizer = joblib.load('vectorizer.pkl')
 
 # Page config
